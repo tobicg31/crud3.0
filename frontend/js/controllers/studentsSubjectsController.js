@@ -90,16 +90,30 @@ function setupFormHandler()
         {
             await studentsSubjectsAPI.create(relation);
             alert("Relación creada correctamente.");
+
+            const mensaje = document.getElementById('mensaje');
+            mensaje.textContent = "Relación creada correctamente.";
+            mensaje.className = "w3-center w3-text-green w3-padding";
+
         }
 
         clearForm();
         loadRelations();
-    } 
+    } /*
     catch (err) 
     {
         alert(err.message || "Error al guardar la relación.");
-        console.error('Error guardando relación:', err.message);
-    }
+        console.error("Error guardando relación, ya existe la relacion:", err.message);
+    }*/
+
+    catch (err) 
+{
+    const mensaje = document.getElementById('mensaje');
+    mensaje.textContent = err.message || "Error al guardar la relación.";
+    mensaje.className = "w3-center w3-text-blue w3-padding";
+    console.error('Error guardando relación:', err.message);
+}
+
 
     });
 }

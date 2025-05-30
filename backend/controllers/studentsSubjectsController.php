@@ -45,7 +45,7 @@ function handlePut($conn)
     }
 
     $result = updateStudentSubject($conn, $input['id'], $input['student_id'], $input['subject_id'], $input['approved']);
-    if ($result['updated'] > 0) 
+    /*if ($result['updated'] > 0) 
     {
         echo json_encode(["message" => "Actualización correcta"]);
     } 
@@ -53,7 +53,19 @@ function handlePut($conn)
     {
         http_response_code(500);
         echo json_encode(["error" => "No se pudo actualizar"]);
+    }*/
+
+    if (isset($result['error'])) {
+    http_response_code(400);
+    echo json_encode(["error" => $result['error']]);
+    } else if ($result['inserted'] > 0) {
+        echo json_encode(["message" => "Asignación realizada"]);
+    } else {
+        http_response_code(500);
+        echo json_encode(["error" => "Error inesperado al asignar"]);
     }
+
+
 }
 
 function handleDelete($conn) 

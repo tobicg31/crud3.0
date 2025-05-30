@@ -9,6 +9,7 @@
 *    Iteration   : 3.0 ( prototype )
 */
 
+/*
 function assignSubjectToStudent($conn, $student_id, $subject_id, $approved) 
 {
     $sql = "INSERT INTO students_subjects (student_id, subject_id, approved) VALUES (?, ?, ?)";
@@ -21,7 +22,37 @@ function assignSubjectToStudent($conn, $student_id, $subject_id, $approved)
         'inserted' => $stmt->affected_rows,        
         'id' => $conn->insert_id
     ];
+}*/
+
+function assignSubjectToStudent($conn, $student_id, $subject_id, $approved) 
+{
+    // Verificar si ya existe la relación
+    $checkSql = "SELECT id FROM students_subjects WHERE student_id = ? AND subject_id = ?";
+    $checkStmt = $conn->prepare($checkSql);
+    $checkStmt->bind_param("ii", $student_id, $subject_id);
+    $checkStmt->execute();
+    $checkResult = $checkStmt->get_result();
+
+    if ($checkResult->num_rows > 0) {
+        return [
+            'inserted' => 0,
+            'error' => 'La relación entre este estudiante y materia ya existe'
+        ];
+    }
+
+    // Si no existe, insertar
+    $sql = "INSERT INTO students_subjects (student_id, subject_id, approved) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iii", $student_id, $subject_id, $approved);
+    $stmt->execute();
+
+    return [
+        'inserted' => $stmt->affected_rows,        
+        'id' => $conn->insert_id
+    ];
 }
+
+
 
 //Query escrita sin ALIAS resumidos (a mi me gusta más):
 function getAllSubjectsStudents($conn) 
