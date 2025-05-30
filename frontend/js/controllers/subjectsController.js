@@ -191,9 +191,9 @@ document.getElementById("subjectForm").addEventListener("submit", function (e) {
         }
       })
       .catch(() => {
-        mensaje.textContent = "No se pudo conectar con el servidor.";
+        mensaje.textContent = "La materia ya existe.";
         mensaje.classList.remove("w3-text-green");
-        mensaje.classList.add("w3-text-red");
+        mensaje.classList.add("w3-text-blue");
       });
   });
   
