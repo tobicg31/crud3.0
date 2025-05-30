@@ -61,7 +61,7 @@ function setupFormHandler()
 
         const relation = getFormData();
 
-        try 
+       /* try 
         {
             if (relation.id) 
             {
@@ -77,7 +77,30 @@ function setupFormHandler()
         catch (err) 
         {
             console.error('Error guardando relación:', err.message);
+        }*/
+
+        try 
+        {
+        if (relation.id) 
+        {
+            await studentsSubjectsAPI.update(relation);
+            alert("Relación actualizada correctamente.");
+        } 
+        else 
+        {
+            await studentsSubjectsAPI.create(relation);
+            alert("Relación creada correctamente.");
         }
+
+        clearForm();
+        loadRelations();
+    } 
+    catch (err) 
+    {
+        alert(err.message || "Error al guardar la relación.");
+        console.error('Error guardando relación:', err.message);
+    }
+
     });
 }
 
