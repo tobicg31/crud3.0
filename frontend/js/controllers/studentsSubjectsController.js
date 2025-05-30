@@ -109,8 +109,8 @@ function setupFormHandler()
     catch (err) 
 {
     const mensaje = document.getElementById('mensaje');
-    mensaje.textContent = err.message || "Error al guardar la relación.";
-    mensaje.className = "w3-center w3-text-blue w3-padding";
+    mensaje.textContent = err.message && "Error al guardar la relación, ya existe";
+    mensaje.className = "w3-center w3-text-black w3-yellow w3-padding";
     console.error('Error guardando relación:', err.message);
 }
 
