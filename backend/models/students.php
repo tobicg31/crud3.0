@@ -57,6 +57,17 @@ function updateStudent($conn, $id, $fullname, $email, $age)
 
 function deleteStudent($conn, $id) 
 {
+    // Verificar si existe una relación con esa materia
+    $check = $conn->prepare("SELECT id FROM students_subjects WHERE student_id = ?");
+    $check->bind_param("i", $id);
+    $check->execute();
+    $res = $check->get_result();
+
+    if ($res->num_rows > 0) {
+        return ['deleted' => 0, 'error' => 'No se puede borrar la materia: está asignada a estudiantes.'];
+    }
+
+
     $sql = "DELETE FROM students WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
