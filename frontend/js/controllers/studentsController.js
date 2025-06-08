@@ -143,10 +143,16 @@ async function confirmDelete(id)
     {
         await studentsAPI.remove(id);
         loadStudents();
-    } 
+    } /*
     catch (err) 
     {
         console.error('Error al borrar:', err.message);
+    } */
+    catch (err) {
+        const mensaje = document.getElementById('mensaje');
+        mensaje.textContent = err.message || "No se pudo borrar";
+        mensaje.className = "w3-center w3-text-red w3-padding";
     }
+
 }
   
