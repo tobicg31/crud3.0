@@ -150,8 +150,8 @@ async function confirmDelete(id)
     } */
     catch (err) {
         const mensaje = document.getElementById('mensaje');
-        mensaje.textContent = err.message || "No se pudo borrar";
-        mensaje.className = "w3-center w3-text-red w3-padding";
+        mensaje.textContent = err.message && "Existe una relacion con este estudiante";
+        mensaje.className = "w3-center w3-text-black w3-border w3-border-red w3-padding";
     }
 
 }
